@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block metadescription%}
+        We have variety of tunning foods.
+{% endblock %}
+
+
+{% block title %}
+   Search
+{% endblock %}
+
+{% block content %}
+    <div>
+        <p style="paddding-top:20px;">You have searched for: <b>"{{query}}"</b></p>
+    </div>
+
+     <div class="container">
+        <div class="row">
+          {% for product in products %}
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3 mb-5 bg-body rounded" style="width: 18rem; height:300px;">
+                    <a href="{{product.get_url}}"><img src="{{product.image.url}}" class="card-img-top shadow-lg" alt="..." style="height:200px;"></a>
+                  <div class="card-body">
+                    <h5 class="card-title text-center">{{product.name}}</h5>
+                    <p class="card-text text-center">${{product.price}}</p>
+                  </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="row mx-auto">
+                <p class="text-center">0 results found </p>
+            </div>
+          {% endfor %}
+        </div>
+     </div>
+{% endblock %}

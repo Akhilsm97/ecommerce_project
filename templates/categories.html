@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block metadescription%}
+    {% if category %}
+        {{category.description|truncatewords:155}}
+    {% else %}
+        Haii Welcome to ABC Store
+    {% endif %}
+{% endblock %}
+
+<!----------------------Title -------------------------------->
+{% block title %}
+    {% if category %}
+        {{category.name}}- ABC Store
+    {% else %}
+        See our new collections
+    {% endif %}
+{% endblock %}
+<!-------------------------------------------Content -------------------------------->
+
+{% block content%}
+    {% if category %}
+        <div>
+            <div>
+                <a href="{% url 'app_1:allprocat'%}" class="color:black;">Our Product Collections</a>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="container-fluid">
+         <img src="{% static 'images/banner.png' %}" style="width:98%;margin-left:20px;" alt="bfhjbf">
+    </div>
+    <div>
+        {% if category %}
+
+
+    </div>
+<br>
+<div class="text-center">
+    <h2>{{category.name}}</h2>
+    <p>{{category.description}}</p>
+</div>
+{% else%}
+<br>
+<div>
+    <h2 class="text-center">Our Product Collections</h2>
+    <p class="text-center">Every time you use the word healthy you lose, The key is to make yummy, delicious food that happens to be healthy.</p>
+</div>
+{% endif %}
+
+
+    <div class="container">
+        <div class="row">
+          {% for product in products.object_list %}
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3 mb-5 bg-body rounded animate__animated animate__zoomIn animate__delay-0s" style="width: 18rem; height:300px;">
+                    <a href="{{product.get_url}}"><img src="{{product.image.url}}" class="card-img-top shadow-lg" alt="..." style="height:200px;"></a>
+                  <div class="card-body">
+                    <h5 class="card-title text-center">{{product.name}}</h5>
+                      <p class="card-text text-center"><b>₹{{product.price}}</b></p>
+                  </div>
+                </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="mx-auto">
+            {% if products.paginator.num_pages > 1 %}
+            <hr>
+            <div class="text-center">
+                {% for pg in products.paginator.page_range %}
+                    <a href="?page={{pg}}" class="btn btn-light btn-sm {% if products.number == pg %} active {% endif %}}">{{pg}}</a>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <br>
+    </div>
+{% endblock %}

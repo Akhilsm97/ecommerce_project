@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block metadescription%}
+        {{product.description|truncatewords:155}}
+
+{% endblock %}
+
+<!----------------------Title -------------------------------->
+{% block title %}
+    {% if category  %}
+        {{product.name}}
+    {% endif %}
+{% endblock %}
+<!-------------------------------------------Content -------------------------------->
+
+{% block content%}
+<div class="row my_prod_row_class" style="padding:15px 20px 0px 20px;">
+    <div class="mx-auto" style="font-family: Georgia;">
+        <p><a href="{% url 'app_1:allprocat'%}" style="text-decoration:none;">Home</a>\ <a href="{{product.category.get_url}}" style="text-decoration:none;">{{product.category}}</a>\ {{product.name}}</p>
+    </div>
+</div>
+      <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+                <div style="min-width:18rem;">
+                    <img src="{{product.image.url}}" alt="{{product.name}}" style="width:300px;" class="animate__animated animate__fadeIn animate__delay-0s">
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+              <div class="animate__animated animate__fadeIn animate__delay-1s">
+                <h3 class="my_prod_title" style="font-size:16px;font-family: Georgia;font-weight:bold;text-transform:uppercase;letter-spacing: .2em,padding-top:15px;padding-bottom:10px;">{{product.name}}</h3>
+                <p style="font-family: Georgia; font-weight:bold;">₹ {{product.price}}</p>
+                <p class="my_title" style="font-family: Georgia;font-weight:bold;">Product Description</p>
+                <p style="padding-right:20px;font-family: Georgia;font-weight:bold;">{{product.description}}</p>
+                {% if product.stock <= 0%}
+                    <p>Product Out Of Stock</p>
+                {% else %}
+                    <a href="{% url 'cart:add_cart' product.id %}" class="btn btn-secondary " style="font-family: Georgia;">Add to Cart</a>
+                {% endif %}
+              </div>
+            </div>
+        </div>
+      </div>
+
+{% endblock %}
